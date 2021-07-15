@@ -1,20 +1,20 @@
-let canvas = document.getElementById("snake");
-let context = canvas.getContext("2d");
+let canvas = document.getElementById("snake"); //criar elemento que irá rodar o jogo
+let context = canvas.getContext("2d"); //....
 let box = 32;
-let direction = "right";
-let food ={
-    x: Math.floor(Math.random() * 15 + 1)*box,
-    y: Math.floor(Math.random() * 15 + 1)*box
-}
-let snake = []; 
+let snake = []; //criar cobrinha como lista, já que ela vai ser uma série de coordenadas, que quando pintadas, criam os quadradinhos
 snake[0] ={
     x: 8 * box,
     y: 8 * box
 }
+let direction = "right";
+let food ={
+    x: Math.floor(Math.random() * 15 + 1) * box,
+    y: Math.floor(Math.random() * 15 + 1) * box
+}
 
 function createBG(){
     context.fillStyle = "green";
-    context.fillRect(0, 0, 16*box, 16*box); 
+    context.fillRect(0, 0, 16*box, 16*box);
 }
 
 function createSnake (){
@@ -38,7 +38,7 @@ function update(event){
     if(event.keyCode == 40 && direction != 'up') direction = 'down';
 }
 
-function play(){    
+function Play(){    
 
     if(snake[0].x > 15*box && direction == "right") snake[0].x = 0;
     if(snake[0].x < 0 && direction == 'left') snake[0].x = 16 * box;
@@ -47,7 +47,7 @@ function play(){
     
     for(i = 1; i < snake.length; i++){
         if(snake[0].x == snake[i].x && snake[0].y == snake[i].y){
-            clearInterval(jogo);
+            clearInterval(Game);
             alert('Game Over :(');
         }
     }
@@ -65,13 +65,10 @@ function play(){
     if(direction == "down") snakeY += box;
 
     if(snakeX != food.x || snakeY != food.y){
-        snake.pop(); //pop tira o último elemento da lista
+        snake.pop();
     }else{
         food.x = Math.floor(Math.random() * 15 +1) * box;
         food.y = Math.floor(Math.random() * 15 +1) * box;
-    }
-    
-        snake.unshift(newHead);
     }
     
     let newHead ={
@@ -79,4 +76,7 @@ function play(){
         y: snakeY
     }
 
-let jogo = setInterval(play, 100);
+    snake.unshift(newHead);
+}
+
+let game = setInterval(Play, 100);
